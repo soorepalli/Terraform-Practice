@@ -1,0 +1,80 @@
+alb_name = "Lb-WebServer"
+
+vpc_id = "vpc-0d9c05a31978e14f3"
+region = "us-east-1"
+
+subnets = [
+  "subnet-02e0162c1b5874b41",
+  "subnet-0c3968f02479a4471",
+  "subnet-0c3968f02479a4471"
+]
+
+security_groups = [
+  "sg-0c0167a9a3bd66c6e"
+  # "sg-0551fa289ee5407ea"
+]
+
+target_groups = [
+  {
+    name_prefix = "tg1" # Must be 6 characters or fewer
+    port        = 80
+    protocol    = "HTTP"
+    target_type = "instance"
+    health_check = {
+      path                = "/"
+      interval            = 30
+      timeout             = 5
+      healthy_threshold   = 3
+      unhealthy_threshold = 3
+      matcher             = "200"
+    }
+  },
+  {
+    name_prefix = "tg2" # Must be 6 characters or fewer
+    port        = 80
+    protocol    = "HTTP"
+    target_type = "instance"
+    health_check = {
+      path                = "/images"
+      interval            = 30
+      timeout             = 5
+      healthy_threshold   = 3
+      unhealthy_threshold = 3
+      matcher             = "200"
+    }
+  },
+  {
+    name_prefix = "tg3" # Must be 6 characters or fewer
+    port        = 80
+    protocol    = "HTTP"
+    target_type = "instance"
+    health_check = {
+      path                = "/register"
+      interval            = 30
+      timeout             = 5
+      healthy_threshold   = 3
+      unhealthy_threshold = 3
+      matcher             = "200"
+    }
+  }
+  # {
+  #  name_prefix = "tg2"
+  #  port        = 443
+  #  protocol    = "HTTPS"
+  #  target_type = "instance"
+  #  health_check = {
+  #    path                = "/status"
+  #    interval            = 30
+  #    timeout             = 5
+  #    healthy_threshold   = 2
+  #    unhealthy_threshold = 2
+  #  }
+  # }
+]
+
+
+instances = [
+  "i-0ad775f361bd05028",
+  "i-03a0144fb1a14b259",
+  "i-022e02caf553f75ba"
+]
